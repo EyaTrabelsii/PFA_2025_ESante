@@ -1,0 +1,39 @@
+{
+  "name": "esante-notification-service",
+  "version": "1.0.0",
+  "description": "E-Santé Notification Service with OneSignal push notifications and Kafka consumers",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+  "keywords": [
+    "notifications",
+    "push",
+    "onesignal",
+    "kafka",
+    "socket.io",
+    "healthcare"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^7.5.0",
+    "socket.io": "^4.6.1",
+    "joi": "^17.9.2",
+    "axios": "^1.5.0",
+    "jsonwebtoken": "^9.0.2",
+    "dotenv": "^16.3.1",
+    "helmet": "^7.0.0",
+    "cors": "^2.8.5",
+    "onesignal-node": "^3.4.0",
+    "kafkajs": "^2.2.4",
+    "node-cron": "^3.0.2",
+    "nodemailer": "^6.9.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

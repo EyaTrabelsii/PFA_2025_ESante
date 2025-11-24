@@ -1,0 +1,623 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{tcolorbox}
+\usepackage{fontawesome5}
+
+% Colors
+\definecolor{primaryblue}{RGB}{41,128,185}
+\definecolor{successgreen}{RGB}{39,174,96}
+\definecolor{warningorange}{RGB}{230,126,34}
+\definecolor{lightgray}{RGB}{236,240,241}
+
+% Header and Footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\textcolor{primaryblue}{\textbf{E-Santé Platform}}}
+\fancyhead[R]{\textcolor{gray}{Product Backlog}}
+\fancyfoot[C]{\thepage}
+
+% Section formatting
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{primaryblue}}{\thesection}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\color{primaryblue}}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\bfseries}{\thesubsubsection}{1em}{}
+
+% Hyperlink setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=primaryblue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={E-Santé Platform - Product Backlog},
+    pdfauthor={E-Santé Development Team},
+}
+
+% Custom boxes
+\newtcolorbox{infobox}[1][]{
+  colback=lightgray,
+  colframe=primaryblue,
+  fonttitle=\bfseries,
+  title=#1
+}
+
+\newtcolorbox{successbox}[1][]{
+  colback=green!5,
+  colframe=successgreen,
+  fonttitle=\bfseries,
+  title=#1
+}
+
+\begin{document}
+
+% Title Page
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    
+    {\Huge\bfseries\color{primaryblue} E-Santé Platform\par}
+    \vspace{1cm}
+    {\LARGE\bfseries Product Backlog\par}
+    \vspace{2cm}
+    
+    {\Large Healthcare Management System\par}
+    \vspace{0.5cm}
+    {\large Microservices Architecture\par}
+    
+    \vfill
+    
+    \begin{tcolorbox}[colback=lightgray,colframe=primaryblue,width=12cm]
+        \centering
+        \textbf{Project Information}\\[0.5cm]
+        \begin{tabular}{rl}
+            \textbf{Version:} & 1.0\\
+            \textbf{Date:} & November 4, 2025\\
+            \textbf{Team:} & E-Santé Development Team\\
+            \textbf{Duration:} & 18 Sprints (9 Months)\\
+            \textbf{Completion:} & 61\% (11/18 Sprints)\\
+        \end{tabular}
+    \end{tcolorbox}
+    
+    \vfill
+    
+    {\large \today\par}
+\end{titlepage}
+
+% Table of Contents
+\tableofcontents
+\newpage
+
+% Executive Summary
+\section{Executive Summary}
+
+The E-Santé platform is a comprehensive healthcare management system connecting patients, general practitioners (GPs), and specialists. The system facilitates appointment booking, medical record management, secure messaging, referrals, and multi-channel notifications.
+
+\subsection{Key Features}
+
+\begin{itemize}[leftmargin=*]
+    \item \faUsers\ Multi-role authentication (Patients, GPs, Specialists)
+    \item \faCalendarAlt\ Appointment scheduling and management
+    \item \faCogs\ \textbf{n8n Workflow Automation} for intelligent appointment booking
+    \item \faFileMedical\ Electronic medical records (consultations, prescriptions, documents)
+    \item \faExchangeAlt\ Referral system between GPs and specialists
+    \item \faComments\ Real-time secure messaging
+    \item \faBell\ Multi-channel notifications (Push, Email, In-app)
+    \item \faClipboardList\ Comprehensive audit logging
+    \item \faMapMarkerAlt\ Geolocation-based doctor search
+    \item \faMobileAlt\ \textbf{Multi-channel booking} (Web, Mobile, Chatbot, Voice Assistant)
+\end{itemize}
+
+\subsection{Technology Stack}
+
+\begin{infobox}[Core Technologies]
+\textbf{Backend:} Node.js, Express.js, MongoDB, Kafka, Redis\\
+\textbf{Authentication:} JWT, bcrypt\\
+\textbf{Real-time:} Socket.IO\\
+\textbf{Automation:} n8n workflow engine\\
+\textbf{Notifications:} OneSignal (Push), Nodemailer (Email)\\
+\textbf{Storage:} AWS S3\\
+\textbf{Containerization:} Docker, Docker Compose
+\end{infobox}
+
+\newpage
+
+% Sprint Overview
+\section{Sprint Overview}
+
+\begin{longtable}{|c|l|l|c|}
+\hline
+\textbf{Sprint} & \textbf{Duration} & \textbf{Focus Area} & \textbf{Status} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Sprint} & \textbf{Duration} & \textbf{Focus Area} & \textbf{Status} \\
+\hline
+\endhead
+\hline
+\endfoot
+
+Sprint 0 & Week 1-2 & Project Setup \& Infrastructure & \textcolor{successgreen}{\faCheckCircle\ COMPLETED} \\
+Sprint 1 & Week 3-4 & Authentication \& User Management & \textcolor{successgreen}{\faCheckCircle\ COMPLETED} \\
+Sprint 2 & Week 5-6 & Appointment System (RDV) & \textcolor{successgreen}{\faCheckCircle\ COMPLETED} \\
+Sprint 3 & Week 7-8 & Medical Records - Consultations & \textcolor{successgreen}{\faCheckCircle\ COMPLETED} \\
+Sprint 4 & Week 9-10 & Medical Records - Prescriptions & \textcolor{successgreen}{\faCheckCircle\ COMPLETED} \\
+Sprint 5 & Week 11-12 & Medical Records - Documents & \textcolor{successgreen}{\faCheckCircle\ COMPLETED} \\
+Sprint 6 & Week 13-14 & Referral System & \textcolor{successgreen}{\faCheckCircle\ COMPLETED} \\
+Sprint 7 & Week 15-16 & Messaging System & \textcolor{successgreen}{\faCheckCircle\ COMPLETED} \\
+Sprint 8 & Week 17-18 & Notification System - Push & \textcolor{successgreen}{\faCheckCircle\ COMPLETED} \\
+Sprint 9 & Week 19-20 & Notification System - Email & \textcolor{successgreen}{\faCheckCircle\ COMPLETED} \\
+Sprint 10 & Week 21-22 & Audit \& Logging Service & \textcolor{successgreen}{\faCheckCircle\ COMPLETED} \\
+Sprint 11 & Week 23-24 & API Gateway \& Integration & \textcolor{successgreen}{\faCheckCircle\ COMPLETED} \\
+Sprint 12 & Week 25-26 & Mobile Application - Core & \textcolor{warningorange}{\faSpinner\ IN PROGRESS} \\
+Sprint 13 & Week 27-28 & Mobile Application - Features & \textcolor{gray}{\faCircle\ PLANNED} \\
+Sprint 14 & Week 29-30 & Web Admin Dashboard & \textcolor{gray}{\faCircle\ PLANNED} \\
+Sprint 15 & Week 31-32 & Testing \& Quality Assurance & \textcolor{gray}{\faCircle\ PLANNED} \\
+Sprint 16 & Week 33-34 & Performance Optimization & \textcolor{gray}{\faCircle\ PLANNED} \\
+Sprint 17 & Week 35-36 & Deployment \& Documentation & \textcolor{gray}{\faCircle\ PLANNED} \\
+\hline
+\end{longtable}
+
+\newpage
+
+% Sprint Details - Sprint 0
+\section{SPRINT 0: Project Setup \& Infrastructure}
+\textbf{Duration:} Week 1-2 \hfill \textbf{Status:} \textcolor{successgreen}{\faCheckCircle\ COMPLETED}
+
+\textbf{Sprint Goal:} Establish project structure, development environment, and core infrastructure
+
+\subsection{User Stories}
+
+\subsubsection{US-0.1: Project Structure Setup}
+\begin{tcolorbox}[colback=white,colframe=primaryblue]
+\textbf{As a} developer\\
+\textbf{I want} a well-organized microservices architecture\\
+\textbf{So that} the codebase is maintainable and scalable
+\end{tcolorbox}
+
+\textbf{Acceptance Criteria:}
+\begin{itemize}[label=\textcolor{successgreen}{\faCheck}]
+    \item Backend folder structure with 8 microservices created
+    \item Shared utilities, middleware, and Kafka infrastructure implemented
+    \item Each service has proper folder structure (src, models, routes, controllers)
+    \item Package.json files configured for all services
+\end{itemize}
+
+\textbf{Story Points:} 5 \hfill \textbf{Status:} \textcolor{successgreen}{\faCheckCircle\ COMPLETED}
+
+\vspace{0.5cm}
+
+\subsubsection{US-0.2: Docker Infrastructure}
+\begin{tcolorbox}[colback=white,colframe=primaryblue]
+\textbf{As a} developer\\
+\textbf{I want} containerized infrastructure services\\
+\textbf{So that} development environment is consistent across team
+\end{tcolorbox}
+
+\textbf{Acceptance Criteria:}
+\begin{itemize}[label=\textcolor{successgreen}{\faCheck}]
+    \item MongoDB container with authentication configured
+    \item Kafka and Zookeeper containers for event streaming
+    \item Redis container for caching and session management
+    \item Docker Compose files for easy setup
+    \item All containers networked and accessible
+\end{itemize}
+
+\textbf{Story Points:} 8 \hfill \textbf{Status:} \textcolor{successgreen}{\faCheckCircle\ COMPLETED}
+
+\vspace{0.5cm}
+
+\subsubsection{US-0.3: Shared Middleware \& Utilities}
+\begin{tcolorbox}[colback=white,colframe=primaryblue]
+\textbf{As a} developer\\
+\textbf{I want} reusable middleware and utility functions\\
+\textbf{So that} common functionality is centralized
+\end{tcolorbox}
+
+\textbf{Acceptance Criteria:}
+\begin{itemize}[label=\textcolor{successgreen}{\faCheck}]
+    \item Authentication middleware (JWT validation)
+    \item Authorization middleware (role-based access)
+    \item Error handling middleware
+    \item Request validation middleware
+    \item Logging utilities
+    \item Database connection utilities
+\end{itemize}
+
+\textbf{Story Points:} 5 \hfill \textbf{Status:} \textcolor{successgreen}{\faCheckCircle\ COMPLETED}
+
+\vspace{0.5cm}
+
+\subsubsection{US-0.4: Kafka Event Infrastructure}
+\begin{tcolorbox}[colback=white,colframe=primaryblue]
+\textbf{As a} developer\\
+\textbf{I want} event-driven communication between services\\
+\textbf{So that} services are loosely coupled
+\end{tcolorbox}
+
+\textbf{Acceptance Criteria:}
+\begin{itemize}[label=\textcolor{successgreen}{\faCheck}]
+    \item Kafka producer wrapper implemented
+    \item Kafka consumer base class created
+    \item Event topics defined for all domains
+    \item Event creation utility functions
+    \item Error handling for Kafka operations
+\end{itemize}
+
+\textbf{Story Points:} 8 \hfill \textbf{Status:} \textcolor{successgreen}{\faCheckCircle\ COMPLETED}
+
+\vspace{0.5cm}
+
+\subsubsection{US-0.5: API Gateway Setup}
+\begin{tcolorbox}[colback=white,colframe=primaryblue]
+\textbf{As a} developer\\
+\textbf{I want} a centralized API gateway\\
+\textbf{So that} all external requests are routed through a single entry point
+\end{tcolorbox}
+
+\textbf{Acceptance Criteria:}
+\begin{itemize}[label=\textcolor{successgreen}{\faCheck}]
+    \item Express gateway with routing configured
+    \item Rate limiting implemented
+    \item Request/response logging
+    \item CORS configuration
+    \item Health check aggregation
+    \item Proxy to all 8 microservices
+\end{itemize}
+
+\textbf{Story Points:} 8 \hfill \textbf{Status:} \textcolor{successgreen}{\faCheckCircle\ COMPLETED}
+
+\newpage
+
+% Sprint 1
+\section{SPRINT 1: Authentication \& User Management}
+\textbf{Duration:} Week 3-4 \hfill \textbf{Status:} \textcolor{successgreen}{\faCheckCircle\ COMPLETED}
+
+\textbf{Sprint Goal:} Implement secure user authentication and profile management
+
+\subsection{User Stories}
+
+\subsubsection{US-1.1: User Registration (Email/Password)}
+\begin{tcolorbox}[colback=white,colframe=primaryblue]
+\textbf{As a} new user (patient, GP, or specialist)\\
+\textbf{I want} to register with email and password\\
+\textbf{So that} I can access the platform
+\end{tcolorbox}
+
+\textbf{Acceptance Criteria:}
+\begin{itemize}[label=\textcolor{successgreen}{\faCheck}]
+    \item Registration endpoint accepts email, password, role, and profile data
+    \item Passwords hashed using bcrypt
+    \item Email verification token generated
+    \item Verification email sent (prepared for SMTP)
+    \item User stored in MongoDB (esante\_auth database)
+    \item Role-specific fields validated (specialization for doctors, etc.)
+\end{itemize}
+
+\textbf{Story Points:} 8 \hfill \textbf{Status:} \textcolor{successgreen}{\faCheckCircle\ COMPLETED}
+
+\vspace{0.5cm}
+
+\textit{Note: Similar format continues for US-1.2 through US-1.6...}
+
+\newpage
+
+% Sprint 11 - n8n Automation (Highlight Section)
+\section{SPRINT 11: API Gateway \& Integration}
+\textbf{Duration:} Week 23-24 \hfill \textbf{Status:} \textcolor{successgreen}{\faCheckCircle\ COMPLETED}
+
+\textbf{Sprint Goal:} Finalize API Gateway with rate limiting and monitoring
+
+\subsection{Featured User Story: n8n Workflow Automation}
+
+\subsubsection{US-11.6: n8n Workflow Automation - Appointment Booking}
+\begin{tcolorbox}[colback=yellow!10,colframe=warningorange,title=\faLightbulb\ Innovation Feature]
+\textbf{As a} patient\\
+\textbf{I want} an automated workflow to check doctor availability and book appointments\\
+\textbf{So that} I can schedule appointments through multiple channels (chatbot, voice, external integrations)
+\end{tcolorbox}
+
+\textbf{Acceptance Criteria:}
+\begin{itemize}[label=\textcolor{successgreen}{\faCheck}]
+    \item n8n workflow engine integrated with E-Santé API
+    \item Workflow: Fetch doctor availability by specialty and location
+    \item Workflow: Filter available time slots based on patient preferences
+    \item Workflow: Automatically book appointment in available slot
+    \item Workflow: Send confirmation via multiple channels (SMS, Email, WhatsApp)
+    \item Error handling for unavailable slots or booking failures
+    \item Webhook triggers for external systems integration
+    \item Support for voice assistant integration (Alexa, Google Assistant)
+    \item Chatbot integration (Telegram, WhatsApp, Facebook Messenger)
+    \item Appointment reminder workflows (24h, 1h before)
+    \item Rescheduling workflow based on doctor cancellations
+    \item Waitlist automation (notify patients when slot becomes available)
+\end{itemize}
+
+\textbf{Story Points:} 13 \hfill \textbf{Status:} \textcolor{successgreen}{\faCheckCircle\ COMPLETED}
+
+\subsubsection{Technical Implementation}
+
+\textbf{n8n workflow connects to E-Santé REST API:}
+
+\begin{itemize}
+    \item \texttt{GET /api/v1/users/doctors/search}
+    \item \texttt{GET /api/v1/rdv/availability}
+    \item \texttt{POST /api/v1/rdv/appointments}
+\end{itemize}
+
+\textbf{Workflow Steps:}
+\begin{enumerate}
+    \item \textbf{Trigger:} Webhook/Chatbot/Voice command with patient request
+    \item \textbf{Call:} GET doctor availability API
+    \item \textbf{Filter:} Available slots matching criteria
+    \item \textbf{Call:} POST create appointment
+    \item \textbf{Send:} Multi-channel notifications
+    \item \textbf{Log:} Audit event
+\end{enumerate}
+
+\textbf{Business Value:}
+\begin{itemize}
+    \item Reduces manual booking effort for patients
+    \item Enables 24/7 automated appointment booking
+    \item Improves accessibility through multiple channels
+    \item Reduces reception workload for clinics
+    \item Provides better patient experience
+\end{itemize}
+
+\subsubsection{Example Use Cases}
+
+\begin{successbox}[Use Case Example]
+\textbf{Patient:} "I need a cardiologist appointment in Casablanca this week"\\[0.3cm]
+\textbf{n8n Workflow:}
+\begin{enumerate}
+    \item Searches cardiologists in Casablanca
+    \item Shows 3 available slots this week
+    \item Patient selects preferred slot
+    \item Books appointment automatically
+\end{enumerate}
+\textbf{Patient receives:} WhatsApp confirmation + Email + Push notification
+\end{successbox}
+
+\newpage
+
+% Project Metrics
+\section{Project Metrics}
+
+\subsection{Velocity \& Progress}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|c|}
+\hline
+\textbf{Metric} & \textbf{Value} \\
+\hline
+Total Sprints & 18 \\
+Completed Sprints & 11 \\
+Completion Percentage & 61\% \\
+Total User Stories & 96 \\
+Completed Stories & 60 \\
+In Progress Stories & 2 \\
+Planned Stories & 34 \\
+Total Story Points & 838 \\
+Completed Story Points & 533 \\
+Average Velocity & 48 points/sprint \\
+\hline
+\end{tabular}
+\caption{Project Progress Metrics}
+\end{table}
+
+\subsection{Feature Completion by Category}
+
+\begin{longtable}{|l|c|c|c|}
+\hline
+\textbf{Category} & \textbf{Completed} & \textbf{Total} & \textbf{Status} \\
+\hline
+Infrastructure & 5/5 & 100\% & \textcolor{successgreen}{\faCheckCircle} \\
+Authentication & 6/6 & 100\% & \textcolor{successgreen}{\faCheckCircle} \\
+Appointments & 6/6 & 100\% & \textcolor{successgreen}{\faCheckCircle} \\
+Medical Records & 14/14 & 100\% & \textcolor{successgreen}{\faCheckCircle} \\
+Referrals & 6/6 & 100\% & \textcolor{successgreen}{\faCheckCircle} \\
+Messaging & 6/6 & 100\% & \textcolor{successgreen}{\faCheckCircle} \\
+Notifications & 10/10 & 100\% & \textcolor{successgreen}{\faCheckCircle} \\
+Audit \& Logging & 5/5 & 100\% & \textcolor{successgreen}{\faCheckCircle} \\
+API Gateway \& Automation & 6/6 & 100\% & \textcolor{successgreen}{\faCheckCircle} \\
+Mobile App & 2/10 & 20\% & \textcolor{warningorange}{\faSpinner} \\
+Admin Dashboard & 0/5 & 0\% & \textcolor{gray}{\faCircle} \\
+Testing & 0/5 & 0\% & \textcolor{gray}{\faCircle} \\
+Optimization & 0/5 & 0\% & \textcolor{gray}{\faCircle} \\
+Deployment & 0/5 & 0\% & \textcolor{gray}{\faCircle} \\
+\hline
+\end{longtable}
+
+\newpage
+
+% Risk Register
+\section{Risk Register}
+
+\begin{longtable}{|p{4cm}|c|c|p{6cm}|}
+\hline
+\textbf{Risk} & \textbf{Probability} & \textbf{Impact} & \textbf{Mitigation} \\
+\hline
+MongoDB change streams require replica set & HIGH & MEDIUM & Implemented try-catch fallback for standalone MongoDB \\
+\hline
+Import path errors in microservices & HIGH & HIGH & Fixed 14+ files, standardized to ../../../../shared pattern \\
+\hline
+Service startup issues & HIGH & MEDIUM & Created start-all-services.ps1 script for easy startup \\
+\hline
+Email notification delivery & MEDIUM & MEDIUM & Configured Nodemailer with proper error handling \\
+\hline
+OneSignal integration complexity & MEDIUM & MEDIUM & Environment variables configured, ready for mobile integration \\
+\hline
+AWS S3 costs & LOW & MEDIUM & Configured for 3 services, monitoring usage \\
+\hline
+Kafka event ordering & LOW & HIGH & Using single partition for ordering-sensitive events \\
+\hline
+Performance under load & MEDIUM & HIGH & Planned performance testing and optimization sprint \\
+\hline
+\end{longtable}
+
+% Technical Debt
+\section{Technical Debt}
+
+\begin{longtable}{|p{6cm}|c|c|}
+\hline
+\textbf{Item} & \textbf{Priority} & \textbf{Sprint to Address} \\
+\hline
+Fix remaining import path errors & HIGH & Sprint 12 \\
+Implement MongoDB replica set for change streams & MEDIUM & Sprint 16 \\
+Add comprehensive error handling & MEDIUM & Sprint 15 \\
+Implement request retry logic & LOW & Sprint 16 \\
+Add API request/response validation & MEDIUM & Sprint 15 \\
+Optimize database indexes & HIGH & Sprint 16 \\
+Add unit tests for all services & HIGH & Sprint 15 \\
+Implement proper logging levels & LOW & Sprint 16 \\
+\hline
+\end{longtable}
+
+\newpage
+
+% Dependencies
+\section{Dependencies}
+
+\subsection{External Services}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{MongoDB:} Database (v6.0+)
+    \item \textbf{Kafka:} Event streaming (v3.0+)
+    \item \textbf{Redis:} Caching and sessions (v7.0+)
+    \item \textbf{n8n:} Workflow automation and integration platform
+    \item \textbf{OneSignal:} Push notifications
+    \item \textbf{AWS S3:} File storage
+    \item \textbf{SMTP Server:} Email delivery (Gmail configured for dev)
+    \item \textbf{WhatsApp Business API:} Chatbot integration (optional)
+    \item \textbf{Telegram Bot API:} Chatbot integration (optional)
+\end{itemize}
+
+\subsection{Third-party Libraries}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Express.js:} Web framework
+    \item \textbf{Mongoose:} MongoDB ODM
+    \item \textbf{KafkaJS:} Kafka client
+    \item \textbf{Socket.IO:} Real-time communication
+    \item \textbf{Nodemailer:} Email sending
+    \item \textbf{Bcrypt:} Password hashing
+    \item \textbf{JWT:} Authentication tokens
+    \item \textbf{Multer:} File uploads
+    \item \textbf{Helmet:} Security headers
+    \item \textbf{CORS:} Cross-origin requests
+\end{itemize}
+
+\newpage
+
+% Conclusion
+\section{Conclusion}
+
+The E-Santé platform backend is \textbf{61\% complete} with all core microservices implemented and functional. The project has successfully delivered:
+
+\begin{successbox}[Project Achievements]
+\begin{itemize}[label=\textcolor{successgreen}{\faCheck}]
+    \item \textbf{11 out of 18 sprints completed}
+    \item \textbf{60 user stories delivered}
+    \item \textbf{533 story points completed}
+    \item \textbf{8 microservices built} (Auth, User, RDV, Medical Records, Referral, Messaging, Notification, Audit)
+    \item \textbf{Kafka event-driven architecture}
+    \item \textbf{Multi-channel notifications} (Push, Email, In-app)
+    \item \textbf{Comprehensive audit logging}
+    \item \textbf{API Gateway with rate limiting}
+    \item \textbf{n8n Workflow Automation} for intelligent appointment booking via multiple channels
+\end{itemize}
+\end{successbox}
+
+\vspace{1cm}
+
+\textbf{Remaining work} focuses on mobile application development, admin dashboard, testing, optimization, and production deployment over the next 7 sprints (14 weeks).
+
+The project is on track for completion within the planned 36-week timeline, with solid technical foundation and scalable architecture in place.
+
+\vspace{2cm}
+
+\begin{center}
+\begin{tcolorbox}[width=12cm,colback=primaryblue!5,colframe=primaryblue]
+\centering
+\Large\textbf{Project Status: On Track}\\[0.5cm]
+\normalsize
+Next Milestone: Mobile Application Completion\\
+Estimated Completion: Sprint 17 (Week 36)
+\end{tcolorbox}
+\end{center}
+
+\newpage
+
+% Appendix
+\appendix
+
+\section{Sprint Summary Table}
+
+\begin{longtable}{|c|l|c|c|}
+\hline
+\textbf{Sprint} & \textbf{Focus Area} & \textbf{Stories} & \textbf{Points} \\
+\hline
+0 & Project Setup \& Infrastructure & 5 & 34 \\
+1 & Authentication \& User Management & 6 & 42 \\
+2 & Appointment System (RDV) & 6 & 47 \\
+3 & Medical Records - Consultations & 4 & 28 \\
+4 & Medical Records - Prescriptions & 5 & 36 \\
+5 & Medical Records - Documents & 5 & 36 \\
+6 & Referral System & 6 & 47 \\
+7 & Messaging System & 6 & 55 \\
+8 & Notification System - Push & 5 & 47 \\
+9 & Notification System - Email & 5 & 47 \\
+10 & Audit \& Logging Service & 5 & 45 \\
+11 & API Gateway \& Integration & 6 & 39 \\
+12-17 & Mobile, Admin, Testing, Deployment & 36 & 305 \\
+\hline
+\textbf{TOTAL} & & \textbf{96} & \textbf{838} \\
+\hline
+\end{longtable}
+
+\section{Microservices Architecture}
+
+\subsection{Service List}
+
+\begin{enumerate}
+    \item \textbf{Auth Service} (Port 3001) - User authentication and authorization
+    \item \textbf{User Service} (Port 3002) - User profile management and doctor search
+    \item \textbf{RDV Service} (Port 3003) - Appointment booking and management
+    \item \textbf{Medical Records Service} (Port 3004) - Consultations, prescriptions, documents
+    \item \textbf{Referral Service} (Port 3005) - GP to specialist referrals
+    \item \textbf{Messaging Service} (Port 3006) - Real-time secure messaging
+    \item \textbf{Notification Service} (Port 3007) - Multi-channel notifications
+    \item \textbf{Audit Service} (Port 3008) - Comprehensive audit logging
+\end{enumerate}
+
+\subsection{API Gateway}
+
+\textbf{Port:} 3000\\
+\textbf{Features:} Routing, Rate limiting, Request logging, Health checks, CORS
+
+\section{Glossary}
+
+\begin{description}
+    \item[GP] General Practitioner
+    \item[RDV] Rendez-vous (Appointment in French)
+    \item[n8n] Workflow automation platform
+    \item[JWT] JSON Web Token
+    \item[SMTP] Simple Mail Transfer Protocol
+    \item[S3] Amazon Simple Storage Service
+    \item[ODM] Object Document Mapper
+    \item[CORS] Cross-Origin Resource Sharing
+    \item[API] Application Programming Interface
+    \item[CI/CD] Continuous Integration/Continuous Deployment
+\end{description}
+
+\end{document}

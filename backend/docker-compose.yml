@@ -1,0 +1,56 @@
+services:
+  # MongoDB
+  mongodb:
+    image: mongo:6
+    container_name: esante-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - esante-network
+
+  # Redis
+  redis:
+    image: redis:7-alpine
+    container_name: esante-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    networks:
+      - esante-network
+
+  # Zookeeper
+  zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: esante-zookeeper
+    ports:
+      - "2181:2181"
+    networks:
+      - esante-network
+
+  # Kafka
+  kafka:
+    image: wurstmeister/kafka
+    container_name: esante-kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: localhost
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+    networks:
+      - esante-network
+
+volumes:
+  mongodb_data:
+
+networks:
+  esante-network:
+    driver: bridge

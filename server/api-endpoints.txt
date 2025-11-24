@@ -1,0 +1,499 @@
+# Team Management API Endpoints
+
+## Base URL
+All endpoints are prefixed with: `http://your-server-url:5000/api`
+
+## Authentication Endpoints
+
+### Register User
+- **URL**: `/auth/register`
+- **Method**: `POST`
+- **Payload**:
+```json
+{
+  "name": "string",
+  "email": "string",
+  "password": "string"
+}
+```
+- **Response**:
+```json
+{
+  "token": "jwt_token",
+  "user": {
+    "id": "string",
+    "name": "string",
+    "email": "string"
+  }
+}
+```
+
+### Login User
+- **URL**: `/auth/login`
+- **Method**: `POST`
+- **Payload**:
+```json
+{
+  "email": "string",
+  "password": "string"
+}
+```
+- **Response**:
+```json
+{
+  "token": "jwt_token",
+  "user": {
+    "id": "string",
+    "name": "string",
+    "email": "string",
+    "role": "string",
+    "teamId": "string",
+    "canManageTasks": false
+  }
+}
+```
+- **Note**: Only admins and team leaders can log in. Regular users and team members do not have login access. For team leaders, task management is disabled by default until an admin enables it.
+
+### Verify Token
+- **URL**: `/auth/verify`
+- **Method**: `GET`
+- **Headers**: `Authorization: Bearer <token>`
+- **Response**:
+```json
+{
+  "valid": true,
+  "user": {
+    "id": "string",
+    "name": "string",
+    "email": "string",
+    "role": "string",
+    "teamId": "string",
+    "canManageTasks": false
+  }
+}
+```
+
+### Reset Password
+- **URL**: `/auth/reset-password`
+- **Method**: `POST`
+- **Headers**: `Authorization: Bearer <token>`
+- **Payload**:
+```json
+{
+  "userId": "string",
+  "currentPassword": "string",
+  "newPassword": "string"
+}
+```
+- **Response**:
+```json
+{
+  "message": "Password updated successfully"
+}
+```
+- **Note**: Requires authentication. User must provide their current password to set a new one.
+
+### Forgot Password
+- **URL**: `/auth/forgot-password`
+- **Method**: `POST`
+- **Payload**:
+```json
+{
+  "email": "string"
+}
+```
+- **Response**:
+```json
+{
+  "message": "If the email exists, a reset link will be sent",
+  "resetToken": "jwt_token" // Only included in development
+}
+```
+- **Note**: In a production environment, the reset token would be sent via email, not in the response.
+
+### Complete Password Reset
+- **URL**: `/auth/complete-reset`
+- **Method**: `POST`
+- **Payload**:
+```json
+{
+  "token": "jwt_token",
+  "newPassword": "string"
+}
+```
+- **Response**:
+```json
+{
+  "message": "Password has been reset successfully"
+}
+```
+- **Note**: Uses the token received from the forgot-password endpoint or email link.
+
+### Create Admin User (Testing)
+- **URL**: `/auth/create-admin`
+- **Method**: `POST`
+- **Payload**:
+```json
+{
+  "name": "string",
+  "email": "string",
+  "password": "string"
+}
+```
+- **Response**:
+```json
+{
+  "token": "jwt_token",
+  "user": {
+    "id": "string",
+    "name": "string",
+    "email": "string",
+    "role": "admin"
+  }
+}
+```
+
+### Create Team Leader (Testing)
+- **URL**: `/auth/create-team-lead`
+- **Method**: `POST`
+- **Payload**:
+```json
+{
+  "name": "string",
+  "email": "string",
+  "password": "string",
+  "teamId": "string"
+}
+```
+- **Response**:
+```json
+{
+  "token": "jwt_token",
+  "user": {
+    "id": "string",
+    "name": "string",
+    "email": "string",
+    "role": "team_leader",
+    "teamId": "string",
+    "canManageTasks": false
+  }
+}
+```
+- **Note**: Team leaders cannot manage tasks by default until enabled by an admin.
+
+## User Endpoints
+
+### Get All Users
+- **URL**: `/users`
+- **Method**: `GET`
+- **Response**: Array of active user objects
+
+### Get All Users (Admin Only)
+- **URL**: `/users/all`
+- **Method**: `GET`
+- **Headers**: Requires admin authentication
+- **Response**: Array of all user objects including deleted ones
+
+### Purge Deleted Users (Admin Only)
+- **URL**: `/users/purge`
+- **Method**: `DELETE`
+- **Headers**: Requires admin authentication
+- **Response**: 
+```json
+{
+  "message": "Permanently deleted users",
+  "count": 5
+}
+```
+
+### Toggle Team Leader Task Permission (Admin Only)
+- **URL**: `/users/toggle-task-permission/:userId`
+- **Method**: `PUT`
+- **Headers**: Requires admin authentication
+- **Response**:
+```json
+{
+  "message": "Team leader's task management permission enabled",
+  "user": {
+    "id": "string",
+    "name": "string",
+    "email": "string",
+    "role": "team_leader",
+    "teamId": "string",
+    "canManageTasks": true
+  }
+}
+```
+- **Description**: Enables or disables a team leader's ability to manage tasks for their team. This is the primary way for admins to control which team leaders can assign and manage tasks.
+
+### Get Available Users (without teams)
+- **URL**: `/users/available`
+- **Method**: `GET`
+- **Response**: Array of available user objects
+- **Details**: Returns users who are not admins, not deleted, and don't have a teamId
+
+### Get User by ID
+- **URL**: `/users/:id`
+- **Method**: `GET`
+- **Response**: User object
+
+### Create User
+- **URL**: `/users`
+- **Method**: `POST`
+- **Payload**:
+```json
+{
+  "name": "string",
+  "email": "string",
+  "password": "string",
+  "role": "user|admin|team_leader|team_member",
+  "teamId": "string" (optional),
+  "avatar": "string" (optional)
+}
+```
+
+### Update User
+- **URL**: `/users/:id`
+- **Method**: `PUT`
+- **Payload**: Any user properties to update
+
+### Delete User
+- **URL**: `/users/:id`
+- **Method**: `DELETE`
+- **Response**: 
+```json
+{
+  "message": "User marked as deleted and all assignments cleared"
+}
+```
+- **Note**: This is a soft delete that marks the user as deleted
+
+## Team Endpoints
+
+### Get All Teams
+- **URL**: `/teams`
+- **Method**: `GET`
+- **Response**: Array of team objects
+
+### Create Team
+- **URL**: `/teams`
+- **Method**: `POST`
+- **Payload**:
+```json
+{
+  "name": "string",
+  "description": "string",
+  "members": [
+    {
+      "user": "userId",
+      "role": "string"
+    }
+  ]
+}
+```
+
+### Update Team
+- **URL**: `/teams/:id`
+- **Method**: `PUT`
+- **Payload**: Any team properties to update
+
+### Delete Team
+- **URL**: `/teams/:id`
+- **Method**: `DELETE`
+
+### Remove Team Member
+- **URL**: `/teams/:teamId/members/:userId`
+- **Method**: `DELETE`
+
+### Promote to Team Leader
+- **URL**: `/teams/:teamId/promote/:userId`
+- **Method**: `PUT`
+- **Headers**: Requires admin authentication
+
+## Task Endpoints
+
+### Get All Tasks
+- **URL**: `/tasks`
+- **Method**: `GET`
+- **Headers**: Requires authentication
+- **Query Parameters**:
+  - `teamId`: Filter by team
+  - `status`: Filter by status
+  - `priority`: Filter by priority
+  - `assignedTo`: Filter by assigned user
+- **Response**: Array of task objects
+
+### Create Task
+- **URL**: `/tasks`
+- **Method**: `POST`
+- **Headers**: Requires authentication
+- **Payload**:
+```json
+{
+  "title": "string",
+  "description": "string",
+  "status": "pending|in_progress|completed",
+  "priority": "low|medium|high",
+  "dueDate": "date",
+  "assignedTo": "userId" (optional),
+  "teamId": "teamId"
+}
+```
+- **Note**: Team leaders can only create tasks if they have the `canManageTasks` permission enabled by an admin.
+
+### Update Task
+- **URL**: `/tasks/:id`
+- **Method**: `PUT`
+- **Headers**: Requires authentication
+- **Payload**: Any task properties to update
+- **Note**: Team leaders can only update tasks for their own team and only if they have the `canManageTasks` permission enabled by an admin.
+
+### Delete Task
+- **URL**: `/tasks/:id`
+- **Method**: `DELETE`
+- **Headers**: Requires authentication
+- **Note**: Team leaders can only delete tasks for their own team and only if they have the `canManageTasks` permission enabled by an admin.
+
+### Get Tasks by Team
+- **URL**: `/tasks/team/:teamId`
+- **Method**: `GET`
+- **Headers**: Requires authentication
+- **Query Parameters**:
+  - `status`: Filter by status
+- **Response**: Array of task objects
+
+### Get Tasks by User
+- **URL**: `/tasks/user/:userId`
+- **Method**: `GET`
+- **Headers**: Requires authentication
+- **Query Parameters**:
+  - `status`: Filter by status
+- **Response**: Array of task objects
+
+## Equipment Endpoints
+
+### Get All Equipment
+- **URL**: `/equipment`
+- **Method**: `GET`
+- **Response**: Array of equipment objects
+
+### Create Equipment
+- **URL**: `/equipment`
+- **Method**: `POST`
+- **Payload**:
+```json
+{
+  "name": "string",
+  "type": "string",
+  "status": "available|assigned|maintenance",
+  "serialNumber": "string",
+  "purchaseDate": "date",
+  "description": "string" (optional),
+  "notes": "string" (optional),
+  "assignedTo": "userId" (optional),
+  "teamId": "teamId" (optional)
+}
+```
+
+### Update Equipment
+- **URL**: `/equipment/:id`
+- **Method**: `PUT`
+- **Payload**: Any equipment properties to update
+
+### Delete Equipment
+- **URL**: `/equipment/:id`
+- **Method**: `DELETE`
+
+## Statistics Endpoints
+
+### Get Admin Statistics
+- **URL**: `/stats/admin`
+- **Method**: `GET`
+- **Headers**: Requires admin authentication
+- **Response**: Admin dashboard statistics
+
+### Get Team Statistics
+- **URL**: `/stats/team/:teamId`
+- **Method**: `GET`
+- **Headers**: Requires authentication
+- **Response**: Team-specific statistics
+
+## Authentication Header Format
+For authenticated endpoints, include the JWT token in the header:
+```
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+```
+
+## Models Reference
+
+### User Model
+```json
+{
+  "_id": "string",
+  "name": "string",
+  "email": "string",
+  "role": "user|admin|team_leader|team_member",
+  "avatar": "string",
+  "teamId": "string",
+  "teams": ["string"],
+  "canManageTasks": false,
+  "isDeleted": boolean,
+  "createdAt": "date",
+  "updatedAt": "date"
+}
+```
+
+### Team Model
+```json
+{
+  "_id": "string",
+  "name": "string",
+  "description": "string",
+  "members": [
+    {
+      "user": "userId",
+      "role": "string",
+      "joinedAt": "date"
+    }
+  ],
+  "createdAt": "date",
+  "updatedAt": "date"
+}
+```
+
+### Task Model
+```json
+{
+  "_id": "string",
+  "title": "string",
+  "description": "string",
+  "status": "pending|in_progress|completed",
+  "priority": "low|medium|high",
+  "dueDate": "date",
+  "assignedTo": "userId",
+  "teamId": "teamId",
+  "completedAt": "date",
+  "createdAt": "date",
+  "updatedAt": "date"
+}
+```
+
+### Equipment Model
+```json
+{
+  "_id": "string",
+  "name": "string",
+  "type": "string",
+  "status": "available|assigned|maintenance",
+  "assignedTo": "userId",
+  "teamId": "teamId",
+  "assignedDate": "date",
+  "returnDate": "date",
+  "description": "string",
+  "serialNumber": "string",
+  "purchaseDate": "date",
+  "notes": "string",
+  "createdAt": "date",
+  "updatedAt": "date"
+}
+``` 
